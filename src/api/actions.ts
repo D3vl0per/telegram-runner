@@ -32,7 +32,7 @@ const generateInvite = async (
 
   try {
     const isTelegramUser = await isMember(groupId, +platformUserId);
-    logger.verbose(`isMember result: ${isTelegramUser}`);
+    logger.verbose(`groupId=groupId, isMember=${isTelegramUser}`);
 
     if (!isTelegramUser) {
       await Bot.Client.unbanChatMember(groupId, +platformUserId);
@@ -95,8 +95,7 @@ const manageGroups = async (
       try {
         await Bot.Client.sendMessage(
           platformUserId,
-          "You have 15 minutes to join these groups before the invite links " +
-            "expire:",
+          `You have unlocked ${invites.length} new groups:`,
           Markup.inlineKeyboard(
             invites.map((inv) => [Markup.button.url(inv.name, inv.link)])
           )
